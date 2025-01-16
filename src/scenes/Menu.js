@@ -7,6 +7,10 @@ class Menu extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png')
         this.load.image('spaceship', './assets/spaceship.png')
         this.load.image('starfield', './assets/starfield.png')
+        // load audio
+        this.load.audio('sfx-select', './assets/sfx-select.wav')
+        this.load.audio('sfx-explosion', './assets/sfx-explosion.wav')
+        this.load.audio('sfx-shot', './assets/sfx-shot.wav')
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {
             frameWidth: 64,
