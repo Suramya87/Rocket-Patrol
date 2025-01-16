@@ -23,6 +23,24 @@ class Play extends Phaser.Scene {
         keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+
+        // initialize score
+        this.p1Score = 0
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig)
     }
     update() {
         // this.p1Rocket.update()
@@ -60,16 +78,19 @@ class Play extends Phaser.Scene {
           return false
         }
       }
-    shipExplode(ship) {
+      shipExplode(ship) {
         // temporarily hide ship
-        ship.alpha = 0
+        ship.alpha = 0                         
         // create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        boom.anims.play('explode')             // play explode animation
-        boom.on('animationcomplete', () => {   // callback after anim completes
-          ship.reset()                         // reset ship position
-          ship.alpha = 1                       // make ship visible again
-          boom.destroy()                       // remove explosion sprite
-        })       
-    }
+        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0)
+        boom.anims.play('explode')           // play explode animation
+        boom.on('animationcomplete', () => { // callback after ani completes
+          ship.reset()                       // reset ship position
+          ship.alpha = 1                     // make ship visible again
+          boom.destroy()                     // remove explosion sprite
+        })
+        // score add and text update
+        this.p1Score += ship.points
+        this.scoreLeft.text = this.p1Score       
+      }
 }
